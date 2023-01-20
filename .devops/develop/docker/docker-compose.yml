@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+    ssh-manager:
+        container_name: sav-os
+        build:
+            context: ../../../
+            dockerfile: ./.devops/develop/docker/Dockerfile
+        volumes:
+            - ../../..:/home/app
+            - ~/storage_block/sav-os:/mnt/sav-os
+        network_mode: bridge
+ 
