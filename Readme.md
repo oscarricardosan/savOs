@@ -32,14 +32,14 @@ docker exec -it sav-os bash
 cargo build --target thumbv7em-none-eabihf
 # Con nuestro target personalizado
 cargo build --target x86_64-sav_os.json
-# Con l target indicado en .cargo/config.toml
+# Con el target indicado en .cargo/config.toml
 cargo build
 ```
 
 Dado que el sistema de destino no tiene sistema operativo, el vinculador no intenta vincular el tiempo de ejecución de C.
 
 
-# Generaeción de sistema operativo
+# Generación de sistema operativo
 
 * `rustup override set nightly` Configuramos al modo nocturno para tener acceso a caracteristicas experimentarles.
 * `rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu` Instala el código fuente de rust para linux modo nocturno
@@ -60,9 +60,5 @@ Comandos para emular SO:
 qemu-system-x86_64 -drive format=raw,file=target/x86_64-sav_os/debug/bootimage-sav_os.bin
 ```
 
-# Comandos
 
-* `rustup override set nightly` Configuramos al modo nocturno para tener acceso a caracteristicas experimentarles.
-* `rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu` Instala el código fuente de rust para linux modo nocturno
-* `cargo bootimage` Compila nuestro kernel y crea una imagen de disco de arranque
-* 
+
