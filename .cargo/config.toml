@@ -7,6 +7,8 @@ build-std-features = ["compiler-builtins-mem"]
 
 [build]
 target = "x86_64-sav_os.json"
+#Dejamos la carpeta de artefactos fuera del proyecto para evitar conflictos de permisos
+target-dir = "/home/target"
 
 [target.'cfg(target_os = "none")']
 runner = "bootimage runner"

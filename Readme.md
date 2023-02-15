@@ -21,9 +21,11 @@ Construcción de sistema operativo siguiendo el tutorial https://os.phil-opp.com
 * Levantar entorno de trabajo:
 ```bash
 # Iniciar docker-compose
-docker-compose -f ./.devops/develop/docker/docker-compose.yml up
+docker-compose -f ./.devops/develop/docker/docker-compose.yml up --build
 # Ingresar a contenedor
 docker exec -it sav-os bash
+
+docker-compose -f ./.devops/develop/docker/docker-compose.yml down --rmi all
 ```
 
 * Para construir sistema operativo:
@@ -43,6 +45,7 @@ Dado que el sistema de destino no tiene sistema operativo, el vinculador no inte
 
 * `rustup override set nightly` Configuramos al modo nocturno para tener acceso a caracteristicas experimentarles.
 * `rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu` Instala el código fuente de rust para linux modo nocturno
+* `cargo install bootimage` Instala bootimage para generar SO
 * `cargo bootimage` Compila nuestro kernel y crea una imagen de disco de arranque
 
 
@@ -55,10 +58,22 @@ Comandos para instalar en linux:
 sudo apt-get install qemu-system
 apt-get install qemu
 ```
-Comandos para emular SO:
+Comandos para emular SO, la carpeta target esta fuera de la aplicación para evitar problemas de permisos:
+
 ```bash
-qemu-system-x86_64 -drive format=raw,file=target/x86_64-sav_os/debug/bootimage-sav_os.bin
+sudo qemu-system-x86_64 -drive format=raw,file=/home/savnedeveloper0/storage_block/sav-os/target/x86_64-sav_os/debug/bootimage-sav_os.bin
 ```
 
+
+# Ejecutar tests
+
+Gracias a la configuración reaalizada en https://os.phil-opp.com/testing/, se desactivo por completo la salida 
+gráfica de qemu, desactivando la interfaz gráfica y ejecutandose la comunicación por puerto serial.
+
+Comando para correr tests desde consola de docker:
+
+```bash
+cargo test
+```
 
 

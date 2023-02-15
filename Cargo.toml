@@ -9,7 +9,9 @@ authors= ["Oscar Sánchez <oscar.sanchez@savne.net>"]
 [dependencies]
 bootloader = "0.9.23" #Habilita un cargador de arranque
 volatile = "0.2.6"
-spin = "0.5.2"
+spin = "0.5.2" #Bloqruar un apuntador
+x86_64 = "0.14.2"
+uart_16550 = "0.2.0" #Comunicación con puerto serial de qemu
 
 [dependencies.lazy_static]
 version = "1.0"
@@ -17,8 +19,21 @@ features = ["spin_no_std"]
 
 # the profile used for `cargo build`
 [profile.dev]
-panic = "abort" # disable stack unwinding on panic
+#panic = "abort" # disable stack unwinding on panic
 
 # the profile used for `cargo build --release`
 [profile.release]
 panic = "abort" # disable stack unwinding on panic
+
+# Configuración para la generación de nuestro boot
+[package.metadata.bootimage]
+test-args = [ # Parametros pasados a qemu cuando se ejecutan tests
+    "-device", "isa-debug-exit,iobase=0xf4,iosize=0x04", "-serial", "stdio",
+    "-display", "none"
+]
+test-success-exit-code = 33 # (0x10 << 1) | 1, se define código de finalización exitosa
+test-timeout = 300          # 5 minutos, tiempo máximo de ejecución para un test antes de darlo como fallido
+
+[[test]]
+name = "should_panic"
+harness = false

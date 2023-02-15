@@ -8,6 +8,6 @@ services:
             dockerfile: ./.devops/develop/docker/Dockerfile
         volumes:
             - ../../..:/home/app
-            - ~/storage_block/sav-os:/mnt/sav-os
+            - ~/storage_block/sav-os/target:/home/target
         network_mode: bridge
  

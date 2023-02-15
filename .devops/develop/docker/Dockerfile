@@ -3,7 +3,9 @@ FROM debian:buster-slim
 ENV TZ="America/Bogota"
 
 RUN apt update
+
 RUN apt install build-essential zlib1g-dev wget -y
+
 
 RUN apt install curl -y
 
@@ -18,9 +20,22 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN rustup install 1.66.0
 
+RUN apt update
+
+#Necesario para compilar SO
+RUN rustup override set nightly
+RUN rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+RUN cargo install bootimage
+
+#Habilita llvm11
+RUN rustup component add llvm-tools-preview
+
+RUN apt-get install qemu-system -y
+RUN apt-get install qemu -y
+
 RUN rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/app
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
- 
+
