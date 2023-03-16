@@ -37,3 +37,7 @@ test-timeout = 300          # 5 minutos, tiempo máximo de ejecución para un te
 [[test]]
 name = "should_panic"
 harness = false
+
+[[test]]
+name = "stack_overflow"
+harness = false

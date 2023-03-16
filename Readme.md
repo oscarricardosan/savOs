@@ -61,6 +61,9 @@ apt-get install qemu
 Comandos para emular SO, la carpeta target esta fuera de la aplicación para evitar problemas de permisos:
 
 ```bash
+#dentro de docker
+cargo run
+#en local
 sudo qemu-system-x86_64 -drive format=raw,file=/home/savnedeveloper0/storage_block/sav-os/target/x86_64-sav_os/debug/bootimage-sav_os.bin
 ```
 
